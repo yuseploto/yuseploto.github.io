@@ -46,13 +46,14 @@
                     </svg>
                     <span id="cart-count" class="bg-red-500 text-white rounded-full px-2 py-1 text-xs">0</span>
                 </button>
-                <div id="cart-dropdown" class="hidden absolute right-0 mt-2 w-64 sm:w-80 bg-white text-black shadow-lg rounded-lg p-4">
+               <div id="cart-dropdown" class="hidden absolute right-0 mt-2 w-64 sm:w-80 bg-white text-black shadow-lg rounded-lg p-4">
                     <h2 class="text-lg font-bold mb-2">Carrito</h2>
                     <div id="cart-items" class="space-y-2"></div>
                     <p class="font-bold mt-2">Total: €<span id="cart-total">0.00</span></p>
                     <div class="mt-4">
                         <h3 class="text-sm font-medium mb-2">Datos de Pago y Envío</h3>
                         <div class="space-y-3">
+                        <form id="payment-form" class="space-y-4">
                             <div>
                                 <label for="full-name" class="block text-sm font-medium">Nombre Completo</label>
                                 <input type="text" id="full-name" class="w-full p-2 border rounded" required>
