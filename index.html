@@ -305,33 +305,23 @@
     console.log('Datos enviados:', JSON.stringify(order));
 
     try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzuxFJTPhumCbbHnJQ0X1X2fgu6ukipheYb_Ml3arCq0Ks9ibad2826v0Ruzd2ch8elBw/exec', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(order)
-        });
-        const result = await response.json();
-        if (response.ok && result.status === 'success') {
-            console.log('Pedido enviado a Google Sheets');
-            // Guardar en localStorage (opcional)
-            orders.push(order);
-            localStorage.setItem('orders', JSON.stringify(orders));
-            // Mostrar resumen del pedido
-            const orderSummary = cart.map(item => `${item.name} x${item.quantity} (€${(item.price * item.quantity).toFixed(2)})`).join('\n');
-            alert(`Compra finalizada con ${paymentMethod}.\n\nDetalles del Pedido:\n${orderSummary}\nTotal: €${document.getElementById('cart-total').textContent}\n\nDatos del Cliente:\nNombre: ${fullName}\nCorreo: ${email}\nDirección: ${address}, ${city}, ${postalCode}\nTeléfono: ${phone || 'No proporcionado'}`);
-            // Limpiar carrito y formulario
-            cart = [];
-            updateCart();
-            document.getElementById('cart-dropdown').classList.add('hidden');
-            document.getElementById('full-name').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('address').value = '';
-            document.getElementById('city').value = '';
-            document.getElementById('postal-code').value = '';
-            document.getElementById('phone').value = '';
-        } else {
-            console.error('Error al enviar el pedido:', result.message);
-            alert('Error al procesar el pedido. Por favor, intenta de nuevo.');
+  const response = await fetch('https://script.google.com/macros/s/AKfycbz9EbxBfKlGemY7TiIINIBPVl6DnHXKDnoxqXeOtn_5RFq3hvU51JBgAtla1DnMtyM3NQ/exec', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(order)
+  });
+  const result = await response.json();
+  if (response.ok && result.status === 'success') {
+    console.log('Pedido enviado a Google Sheets');
+    alert(`Compra finalizada con ${paymentMethod}.\n\nDetalles del Pedido:\n${orderSummary}\nTotal: €${document.getElementById('cart-total').textContent}\n\nDatos del Cliente:\nNombre: ${fullName}\nCorreo: ${email}\nDirección: ${address}, ${city}, ${postalCode}\nTeléfono: ${phone || 'No proporcionado'}`);
+  } else {
+    console.error('Error al enviar el pedido:', result.message);
+    alert('Error al procesar el pedido. Por favor, intenta de nuevo.');
+  }
+} catch (error) {
+  console.error('Error:', error);
+  alert('Error al conectar con el servidor. Por favor, intenta de nuevo.');
+}
         }
     } catch (error) {
         console.error('Error:', error);
