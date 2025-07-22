@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Productos Colombianos en España</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <header class="bg-green-600 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+             <img src="https://misaboracolombia.com/cdn/shop/files/logos-2_3600px_700x.jpg?v=1613740883" alt="Sabor Colombiano" class="h-20 w 50">
+            <h1 class="text-2xl font-bold">PRODUCTOS COLOMBIANOS</h1>
+           </div>
+            <div class="relative">
+                <button id="cart-toggle" class="flex items-center space-x-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 "
+                      System: 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <span id="cart-count" class="bg-red-500 text-white rounded-full px-2 py-1 text-xs">0</span>
+                </button>
+                <div id="cart-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-white text-black shadow-lg rounded-lg p-4">
+                    <h2 class="text-lg font-bold mb-2">Carrito</h2>
+                    <div id="cart-items" class="space-y-2"></div>
+                    <p class="font-bold mt-2">Total: €<span id="cart-total">0.00</span></p>
+                    <div class="mt-4">
+                        <form id="payment-form" class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium">Nombre Completo</label>
+                                <input type="text" id="name" class="w-full p-2 border rounded" required>
+                            </div>
+                            <div>
+                                <label for="city" class="block text-sm font-medium">Ciudad</label>
+                                <input type="text" id="city" class="w-full p-2 border rounded" required>
+                            </div>
+                            <div>
+                                <label for="address" class="block text-sm font-medium">Dirección</label>
+                                <textarea id="address" class="w-full p-2 border rounded" required></textarea>
+                            </div>
+                            <div>
+                                <label for="id-number" class="block text-sm font-medium">Documento de Identidad (DNI/Cédula)</label>
+                                <input type="text" id="id-number" class="w-full p-2 border rounded" required placeholder="Ej: 12345678Z o 1234567890">
+                            </div>
+                            <div>
+                                <label for="age-confirm" class="block text-sm font-medium">
+                                    <input type="checkbox" id="age-confirm" required> Confirmo que soy mayor de 18 años
+                                </label>
+                            </div>
+                            <div>
+                                <label for="payment-method" class="block text-sm font-medium">Método de Pago</label>
+                                <select id="payment-method" class="w-full p-2 border rounded" required>
+                                    <option value="" disabled selected>Seleccione un método</option>
+                                    <option value="credit-card">Tarjeta de Crédito/Débito</option>
+                                    <option value="paypal">PayPal</option>
+                                    <option value="bank-transfer">Transferencia Bancaria</option>
+                                    <option value="bizum">Bizum</option>
+                                </select>
+                            </div>
+                            <button type="submit" id="checkout" class="w-full bg-green-600 text-white p-2 mt-4 rounded hover:bg-green-700">Finalizar Compra</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="container mx-auto py-8">
+        <h2 class="text-3xl font-bold text-center mb-8">NUESTRO CATALOGO</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_969524-MLA82462406550_022025-O.webp/150" alt="Zucaritas" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Zucaritas</h3>
+                <p class="text-gray-600">Cereal crujiente con sabor a maíz.</p>
+                <p class="text-green-600 font-bold">€3.50</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Zucaritas" data-price="3.50">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_975306-MCO80299549403_102024-O.webp/150" alt="Turrón de Maní" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Turrón de Maní</h3>
+                <p class="text-gray-600">Dulce de maní artesanal.</p>
+                <p class="text-green-600 font-bold">€2.00</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Turrón de Maní" data-price="2.00">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_980665-MCO44425755663_122020-O.webp/150" alt="Super Coco" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Super Coco</h3>
+                <p class="text-gray-600">Delicioso chocolate con coco.</p>
+                <p class="text-green-600 font-bold">€1.80</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Super Coco" data-price="1.80">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_708846-MLU75173966392_032024-O.webp/150" alt="Panelita de Leche" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Panelita de Leche</h3>
+                <p class="text-gray-600">Dulce tradicional de panela.</p>
+                <p class="text-green-600 font-bold">€1.50</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Panelita de Leche" data-price="1.50">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_661114-MCO84767208013_052025-O.webp/150" alt="Obleas" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Obleas</h3>
+                <p class="text-gray-600">Galleta crujiente con arequipe.</p>
+                <p class="text-green-600 font-bold">€2.20</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Obleas" data-price="2.20">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_898206-MLA87778694281_072025-O.webp/150" alt="Merengues" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Merengues</h3>
+                <p class="text-gray-600">Dulces ligeros y crujientes.</p>
+                <p class="text-green-600 font-bold">€1.20</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Merengues" data-price="1.20">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_Q_NP_2X_951303-MLU73832000102_012024-E.webp/150" alt="Gomitas" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Gomitas</h3>
+                <p class="text-gray-600">Caramelos de gelatina variados.</p>
+                <p class="text-green-600 font-bold">€2.00</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Gomitas" data-price="2.00">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_850222-MCO70651838492_072023-O.webp/150" alt="Frunas" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Frunas</h3>
+                <p class="text-gray-600">Caramelos frutales masticables.</p>
+                <p class="text-green-600 font-bold">€1.80</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Frunas" data-price="1.80">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_Q_NP_2X_935573-MCO77198184778_072024-E.webp/150" alt="Festival" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Festival</h3>
+                <p class="text-gray-600">Galletas dulces surtidas.</p>
+                <p class="text-green-600 font-bold">€3.00</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Festival" data-price="3.00">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_626463-MCO85774018247_062025-O.webp/150" alt="Dulce de Guayaba" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Dulce de Guayaba</h3>
+                <p class="text-gray-600">Postre tradicional de guayaba.</p>
+                <p class="text-green-600 font-bold">€2.50</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Dulce de Guayaba" data-price="2.50">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_930779-MLA81197910353_122024-O.webp/150" alt="Detodito" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Detodito</h3>
+                <p class="text-gray-600">Mezcla de snacks salados.</p>
+                <p class="text-green-600 font-bold">€2.80</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Detodito" data-price="2.80">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_768422-MCO32115541595_092019-O.webp/150" alt="Dulce de Café" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Dulce de Café</h3>
+                <p class="text-gray-600">Caramelo con sabor a café colombiano.</p>
+                <p class="text-green-600 font-bold">€1.90</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Dulce de Café" data-price="1.90">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_634732-MCO41280144565_032020-O.webp/150" alt="Cocada" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Cocada</h3>
+                <p class="text-gray-600">Dulce de coco artesanal.</p>
+                <p class="text-green-600 font-bold">€2.30</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Cocada" data-price="2.30">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_660307-MCO49253159622_032022-O.webp/150" alt="Bon Bon Bum" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Bon Bon Bum</h3>
+                <p class="text-gray-600">Chupetas rellenas de chicle.</p>
+                <p class="text-green-600 font-bold">€0.80</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Bon Bon Bum" data-price="0.80">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_807403-MLU76689568356_062024-O.webp/150" alt="Chocorramo" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Chocorramo</h3>
+                <p class="text-gray-600">Pastel cubierto de chocolate.</p>
+                <p class="text-green-600 font-bold">€3.20</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Chocorramo" data-price="3.20">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_600835-MLU75151284381_032024-O.webp/150" alt="Chocomelos" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Chocomelos</h3>
+                <p class="text-gray-600">Caramelos cubiertos de chocolate.</p>
+                <p class="text-green-600 font-bold">€2.10</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Chocomelos" data-price="2.10">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_760147-MCO80327204237_102024-O.webp/150" alt="Breva de Arequipe" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Breva de Arequipe</h3>
+                <p class="text-gray-600">Dulce de breva con arequipe.</p>
+                <p class="text-green-600 font-bold">€2.70</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Breva de Arequipe" data-price="2.70">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_887684-MLA83809234550_042025-O.webp/150" alt="Bocadillo Veleño" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Bocadillo Veleño</h3>
+                <p class="text-gray-600">Dulce de guayaba compacto.</p>
+                <p class="text-green-600 font-bold">€2.00</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Bocadillo Veleño" data-price="2.00">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_606280-MLU75010360494_032024-O.webp/150" alt="Arequipe Alpina" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Arequipe Alpina</h3>
+                <p class="text-gray-600">Crema de leche caramelizada.</p>
+                <p class="text-green-600 font-bold">€3.00</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Arequipe Alpina" data-price="3.00">Añadir al Carrito</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_908686-MLA84542723240_052025-O.webp/150" alt="Almojábanas" class="w-full h-40 object-cover rounded">
+                <h3 class="text-lg font-semibold mt-2">Almojábanas</h3>
+                <p class="text-gray-600">Panecillos de queso tradicionales.</p>
+                <p class="text-green-600 font-bold">€2.50</p>
+                <button class="add-to-cart w-full bg-green-600 text-white p-2 mt-2 rounded hover:bg-green-700" data-name="Almojábanas" data-price="2.50">Añadir al Carrito</button>
+            </div>
+        </div>
+    </section>
+
+
+   <footer class="bg-green-600 text-white p-4 text-center">
+    <p>© 2025 Sabor Colombiano. Todos los derechos reservados.</p>
+    <img src="https://github.com/Iswpardxz7/Iswpardxz7.github.io/blob/main/Captura%20de%20pantalla%202025-07-19%20162317.png?raw=true" class="mx-auto mt-4 w-20 h-20">
+</footer>
+    <script>
+   
+        let cart = [];
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        
+        document.getElementById('cart-toggle').addEventListener('click', () => {
+            const cartDropdown = document.getElementById('cart-dropdown');
+            cartDropdown.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const name = button.getAttribute('data-name');
+                const price = parseFloat(button.getAttribute('data-price'));
+                const existingItem = cart.find(item => item.name === name);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ name, price, quantity: 1 });
+                }
+                updateCart();
+            });
+        });
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+            cartItems.innerHTML = '';
+            let total = 0;
+            let itemCount = 0;
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                itemCount += item.quantity;
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'flex justify-between items-center';
+                itemDiv.innerHTML = `
+                    <span>${item.name} x${item.quantity}</span>
+                    <span>€${(item.price * item.quantity).toFixed(2)}</span>
+                    <button class="remove-item text-red-500" data-name="${item.name}">Eliminar</button>
+                `;
+                cartItems.appendChild(itemDiv);
+            });
+            cartCount.textContent = itemCount;
+            cartTotal.textContent = total.toFixed(2);
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', () => {
+                    const name = button.getAttribute('data-name');
+                    cart = cart.filter(item => item.name !== name);
+                    updateCart();
+                });
+            });
+        }
+
+       document.getElementById('checkout').addEventListener('click', async () => {
+    const fullName = document.getElementById('full-name').value;
+    const email = document.getElementById('email').value;
+    const address = document.getElementById('address').value;
+    const city = document.getElementById('city').value;
+    const postalCode = document.getElementById('postal-code').value;
+    const phone = document.getElementById('phone').value;
+    const paymentMethod = document.getElementById('payment-method').value;
+
+    if (cart.length === 0) {
+        alert('El carrito está vacío.');
+        return;
+    }
+    if (!fullName || !email || !address || !city || !postalCode) {
+        alert('Por favor, completa todos los campos obligatorios.');
+        return;
+    }
+
+    const order = {
+        id: Date.now(),
+        customer: { fullName, email, address, city, postalCode, phone: phone || 'No proporcionado' },
+        cart: [...cart],
+        total: parseFloat(document.getElementById('cart-total').textContent),
+        paymentMethod,
+        date: new Date().toISOString()
+    };
+
+    try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbxW4Lfs71JgRwN8oKdzSlDhAyXrSAzLEpQTt4v3lruaNh7KoUZMAyjk53FzvRPluWCZww/exec', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(order)
+        });
+        if (response.ok) {
+            console.log('Pedido enviado a Google Sheets');
+        } else {
+            console.error('Error al enviar el pedido');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+
+    const orderSummary = cart.map(item => `${item.name} x${item.quantity} (€${(item.price * item.quantity).toFixed(2)})`).join('\n');
+    alert(`Compra finalizada con ${paymentMethod}.\n\nDetalles del Pedido:\n${orderSummary}\nTotal: €${document.getElementById('cart-total').textContent}\n\nDatos del Cliente:\nNombre: ${fullName}\nCorreo: ${email}\nDirección: ${address}, ${city}, ${postalCode}\nTeléfono: ${phone || 'No proporcionado'}`);
+
+    cart = [];
+    updateCart();
+    document.getElementById('cart-dropdown').classList.add('hidden');
+    document.getElementById('full-name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('address').value = '';
+    document.getElementById('city').value = '';
+    document.getElementById('postal-code').value = '';
+    document.getElementById('phone').value = '';
+});
+    </script>
+</body>
+</html>
