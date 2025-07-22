@@ -15,23 +15,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans">
-    <script type="module">
-        
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
-  const firebaseConfig = {
-    apiKey: "AIzaSyAUKyNxOzCEpPjcXNaPyGVXIIKEKuF6-gw",
-    authDomain: "candy-shop-01.firebaseapp.com",
-    projectId: "candy-shop-01",
-    storageBucket: "candy-shop-01.firebasestorage.app",
-    messagingSenderId: "361382950594",
-    appId: "1:361382950594:web:819a875e30d7619fd7ad5b",
-    measurementId: "G-QWJVJ5HDBR"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
     <header class="bg-green-600 text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-2 sm:space-x-4">
@@ -45,7 +28,7 @@
                     </svg>
                     <span id="cart-count" class="bg-red-500 text-white rounded-full px-2 py-1 text-xs">0</span>
                 </button>
-               <div id="cart-dropdown" class="hidden absolute right-0 mt-2 w-64 sm:w-80 bg-white text-black shadow-lg rounded-lg p-4">
+                <div id="cart-dropdown" class="hidden absolute right-0 mt-2 w-64 sm:w-80 bg-white text-black shadow-lg rounded-lg p-4">
                     <h2 class="text-lg font-bold mb-2">Carrito</h2>
                     <div id="cart-items" class="space-y-2"></div>
                     <p class="font-bold mt-2">Total: €<span id="cart-total">0.00</span></p>
@@ -240,42 +223,48 @@
         </div>
     </section>
 
-    <footer class="bg-green-600 text-white p-4 text-center">
-        <p>© 2025 Sabor Colombiano. Todos los derechos reservados.</p>
-        <img src="https://github.com/Iswpardxz7/Iswpardxz7.github.io/blob/main/Captura%20de%20pantalla%202025-07-19%20162317.png?raw=true" class="mx-auto mt-4 w-20 h-20">
-    </footer>
 
+   <footer class="bg-green-600 text-white p-4 text-center">
+    <p>© 2025 Sabor Colombiano. Todos los derechos reservados.</p>
+    <img src="https://github.com/Iswpardxz7/Iswpardxz7.github.io/blob/main/Captura%20de%20pantalla%202025-07-19%20162317.png?raw=true" class="mx-auto mt-4 w-20 h-20">
+</footer>
     <script>
-      let cart = [];
-        
-        let orders = JSON.parse(localStorage.getItem('orders')) || [];
-        
+   
+        let cart = [];
+
+    
         document.getElementById('cart-toggle').addEventListener('click', () => {
             const cartDropdown = document.getElementById('cart-dropdown');
             cartDropdown.classList.toggle('hidden');
         });
 
+ 
         document.querySelectorAll('.add-to-cart').forEach(button => {
             button.addEventListener('click', () => {
                 const name = button.getAttribute('data-name');
                 const price = parseFloat(button.getAttribute('data-price'));
                 const existingItem = cart.find(item => item.name === name);
+
                 if (existingItem) {
                     existingItem.quantity += 1;
                 } else {
                     cart.push({ name, price, quantity: 1 });
                 }
+
                 updateCart();
             });
         });
 
+   
         function updateCart() {
             const cartItems = document.getElementById('cart-items');
             const cartCount = document.getElementById('cart-count');
             const cartTotal = document.getElementById('cart-total');
+
             cartItems.innerHTML = '';
             let total = 0;
             let itemCount = 0;
+
             cart.forEach(item => {
                 total += item.price * item.quantity;
                 itemCount += item.quantity;
@@ -288,8 +277,11 @@
                 `;
                 cartItems.appendChild(itemDiv);
             });
+
             cartCount.textContent = itemCount;
             cartTotal.textContent = total.toFixed(2);
+
+    
             document.querySelectorAll('.remove-item').forEach(button => {
                 button.addEventListener('click', () => {
                     const name = button.getAttribute('data-name');
@@ -299,60 +291,18 @@
             });
         }
 
-     document.getElementById('checkout').addEventListener('click', async () => {
-    const fullName = document.getElementById('full-name').value;
-    const email = document.getElementById('email').value;
-    const address = document.getElementById('address').value;
-    const city = document.getElementById('city').value;
-    const postalCode = document.getElementById('postal-code').value;
-    const phone = document.getElementById('phone').value;
-    const paymentMethod = document.getElementById('payment-method').value;
 
-    if (cart.length === 0) {
-        alert('El carrito está vacío.');
-        return;
-    }
-    if (!fullName || !email || !address || !city || !postalCode) {
-        alert('Por favor, completa todos los campos obligatorios.');
-        return;
-    }
-
-    const order = {
-        id: Date.now(),
-        customer: { fullName, email, address, city, postalCode, phone: phone || 'No proporcionado' },
-        cart: [...cart],
-        total: parseFloat(document.getElementById('cart-total').textContent),
-        paymentMethod,
-        date: new Date().toISOString()
-    };
-
-   try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzuxFJTPhumCbbHnJQ0X1X2fgu6ukipheYb_Ml3arCq0Ks9ibad2826v0Ruzd2ch8elBw/exec', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(order)
+        document.getElementById('checkout').addEventListener('click', () => {
+            const paymentMethod = document.getElementById('payment-method').value;
+            if (cart.length === 0) {
+                alert('El carrito está vacío.');
+                return;
+            }
+            alert(`Compra finalizada con ${paymentMethod}. Total: €${document.getElementById('cart-total').textContent}`);
+            cart = [];
+            updateCart();
+            document.getElementById('cart-dropdown').classList.add('hidden');
         });
-        if (response.ok) {
-            console.log('Pedido enviado a Google Sheets');
-        } else {
-            console.error('Error al enviar el pedido');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    };
-   const orderSummary = cart.map(item => `${item.name} x${item.quantity} (€${(item.price * item.quantity).toFixed(2)})`).join('\n');
-    alert(`Compra finalizada con ${paymentMethod}.\n\nDetalles del Pedido:\n${orderSummary}\nTotal: €${document.getElementById('cart-total').textContent}\n\nDatos del Cliente:\nNombre: ${fullName}\nCorreo: ${email}\nDirección: ${address}, ${city}, ${postalCode}\nTeléfono: ${phone || 'No proporcionado'}`);
-
-    cart = [];
-    updateCart();
-    document.getElementById('cart-dropdown').classList.add('hidden');
-    document.getElementById('full-name').value = '';
-    document.getElementById('email').value = '';
-    document.getElementById('address').value = '';
-    document.getElementById('city').value = '';
-    document.getElementById('postal-code').value = '';
-    document.getElementById('phone').value = '';
-});
     </script>
 </body>
 </html>
