@@ -9,6 +9,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans">
+    <script type="module">
+        
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyAUKyNxOzCEpPjcXNaPyGVXIIKEKuF6-gw",
+    authDomain: "candy-shop-01.firebaseapp.com",
+    projectId: "candy-shop-01",
+    storageBucket: "candy-shop-01.firebasestorage.app",
+    messagingSenderId: "361382950594",
+    appId: "1:361382950594:web:819a875e30d7619fd7ad5b",
+    measurementId: "G-QWJVJ5HDBR"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
     <header class="bg-green-600 text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-2 sm:space-x-4">
