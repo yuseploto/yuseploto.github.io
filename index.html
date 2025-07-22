@@ -275,57 +275,61 @@
             });
         }
 
-        document.getElementById('checkout').addEventListener('click', () => {
-            const fullName = document.getElementById('full-name').value;
-            const email = document.getElementById('email').value;
-            const address = document.getElementById('address').value;
-            const city = document.getElementById('city').value;
-            const postalCode = document.getElementById('postal-code').value;
-            const phone = document.getElementById('phone').value;
-            const paymentMethod = document.getElementById('payment-method').value;
+       document.getElementById('checkout').addEventListener('click', async () => {
+    const fullName = document.getElementById('full-name').value;
+    const email = document.getElementById('email').value;
+    const address = document.getElementById('address').value;
+    const city = document.getElementById('city').value;
+    const postalCode = document.getElementById('postal-code').value;
+    const phone = document.getElementById('phone').value;
+    const paymentMethod = document.getElementById('payment-method').value;
 
-            if (cart.length === 0) {
-                alert('El carrito está vacío.');
-                return;
-            }
-            if (!fullName || !email || !address || !city || !postalCode) {
-                alert('Por favor, completa todos los campos obligatorios.');
-                return;
-            }
+    if (cart.length === 0) {
+        alert('El carrito está vacío.');
+        return;
+    }
+    if (!fullName || !email || !address || !city || !postalCode) {
+        alert('Por favor, completa todos los campos obligatorios.');
+        return;
+    }
 
-            const order = {
-                id: Date.now(),
-                customer: {
-                    fullName,
-                    email,
-                    address,
-                    city,
-                    postalCode,
-                    phone: phone || 'No proporcionado',
-                },
-                cart: [...cart], 
-                total: parseFloat(document.getElementById('cart-total').textContent),
-                paymentMethod,
-                date: new Date().toISOString()
-            };
+    const order = {
+        id: Date.now(),
+        customer: { fullName, email, address, city, postalCode, phone: phone || 'No proporcionado' },
+        cart: [...cart],
+        total: parseFloat(document.getElementById('cart-total').textContent),
+        paymentMethod,
+        date: new Date().toISOString()
+    };
 
-            orders.push(order);
-            localStorage.setItem('orders', JSON.stringify(orders));
+    try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbxW4Lfs71JgRwN8oKdzSlDhAyXrSAzLEpQTt4v3lruaNh7KoUZMAyjk53FzvRPluWCZww/exec', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(order)
+        });
+        if (response.ok) {
+            console.log('Pedido enviado a Google Sheets');
+        } else {
+            console.error('Error al enviar el pedido');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
 
-            console.log('Pedidos guardados:', orders);
+    const orderSummary = cart.map(item => `${item.name} x${item.quantity} (€${(item.price * item.quantity).toFixed(2)})`).join('\n');
+    alert(`Compra finalizada con ${paymentMethod}.\n\nDetalles del Pedido:\n${orderSummary}\nTotal: €${document.getElementById('cart-total').textContent}\n\nDatos del Cliente:\nNombre: ${fullName}\nCorreo: ${email}\nDirección: ${address}, ${city}, ${postalCode}\nTeléfono: ${phone || 'No proporcionado'}`);
 
-            const orderSummary = cart.map(item => `${item.name} x${item.quantity} (€${(item.price * item.quantity).toFixed(2)})`).join('\n');
-            alert(`Compra finalizada con ${paymentMethod}.\n\nDetalles del Pedido:\n${orderSummary}\nTotal: €${document.getElementById('cart-total').textContent}\n\nDatos del Cliente:\nNombre: ${fullName}\nCorreo: ${email}\nDirección: ${address}, ${city}, ${postalCode}\nTeléfono: ${phone || 'No proporcionado'}`);
-
-            cart = [];
-            updateCart();
-            document.getElementById('cart-dropdown').classList.add('hidden');
-            document.getElementById('full-name').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('address').value = '';
-            document.getElementById('city').value = '';
-            document.getElementById('postal-code').value = '';
-            document.getElementById('phone').value = '';
+    cart = [];
+    updateCart();
+    document.getElementById('cart-dropdown').classList.add('hidden');
+    document.getElementById('full-name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('address').value = '';
+    document.getElementById('city').value = '';
+    document.getElementById('postal-code').value = '';
+    document.getElementById('phone').value = '';
+});
         });
     </script>
 </body>
