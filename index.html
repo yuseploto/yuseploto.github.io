@@ -27,39 +27,41 @@
                     <div class="mt-4">
                         <form id="payment-form" class="space-y-4">
                             <div>
-                                <label for="name" class="block text-sm font-medium">Nombre Completo</label>
-                                <input type="text" id="name" class="w-full p-2 border rounded" required>
+                                <label for="full-name" class="block text-sm font-medium">Nombre Completo</label>
+                                <input type="text" id="full-name" class="w-full p-2 border rounded" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium">Correo Electrónico</label>
+                                <input type="email" id="email" class="w-full p-2 border rounded" required>
+                            </div>
+                            <div>
+                                <label for="address" class="block text-sm font-medium">Dirección de Envío</label>
+                                <input type="text" id="address" class="w-full p-2 border rounded" placeholder="Calle, número, piso" required>
                             </div>
                             <div>
                                 <label for="city" class="block text-sm font-medium">Ciudad</label>
                                 <input type="text" id="city" class="w-full p-2 border rounded" required>
                             </div>
                             <div>
-                                <label for="address" class="block text-sm font-medium">Dirección</label>
-                                <textarea id="address" class="w-full p-2 border rounded" required></textarea>
+                                <label for="postal-code" class="block text-sm font-medium">Código Postal</label>
+                                <input type="text" id="postal-code" class="w-full p-2 border rounded" required>
                             </div>
                             <div>
-                                <label for="id-number" class="block text-sm font-medium">Documento de Identidad (DNI/Cédula)</label>
-                                <input type="text" id="id-number" class="w-full p-2 border rounded" required placeholder="Ej: 12345678Z o 1234567890">
-                            </div>
-                            <div>
-                                <label for="age-confirm" class="block text-sm font-medium">
-                                    <input type="checkbox" id="age-confirm" required> Confirmo que soy mayor de 18 años
-                                </label>
+                                <label for="phone" class="block text-sm font-medium">Teléfono (Opcional)</label>
+                                <input type="tel" id="phone" class="w-full p-2 border rounded">
                             </div>
                             <div>
                                 <label for="payment-method" class="block text-sm font-medium">Método de Pago</label>
                                 <select id="payment-method" class="w-full p-2 border rounded" required>
-                                    <option value="" disabled selected>Seleccione un método</option>
                                     <option value="credit-card">Tarjeta de Crédito/Débito</option>
                                     <option value="paypal">PayPal</option>
                                     <option value="bank-transfer">Transferencia Bancaria</option>
                                     <option value="bizum">Bizum</option>
                                 </select>
                             </div>
-                            <button type="submit" id="checkout" class="w-full bg-green-600 text-white p-2 mt-4 rounded hover:bg-green-700">Finalizar Compra</button>
-                        </form>
+                        </div>
                     </div>
+                    <button id="checkout" class="w-full bg-green-600 text-white p-2 mt-4 rounded hover:bg-green-700">Finalizar Compra</button>
                 </div>
             </div>
         </div>
