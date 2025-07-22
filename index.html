@@ -313,13 +313,12 @@
         const result = await response.json();
         if (response.ok && result.status === 'success') {
             console.log('Pedido enviado a Google Sheets');
-            // Guardar en localStorage
+
             orders.push(order);
             localStorage.setItem('orders', JSON.stringify(orders));
             // Mostrar resumen del pedido
             const orderSummary = cart.map(item => `${item.name} x${item.quantity} (€${(item.price * item.quantity).toFixed(2)})`).join('\n');
             alert(`Compra finalizada con ${paymentMethod}.\n\nDetalles del Pedido:\n${orderSummary}\nTotal: €${document.getElementById('cart-total').textContent}\n\nDatos del Cliente:\nNombre: ${fullName}\nCorreo: ${email}\nDirección: ${address}, ${city}, ${postalCode}\nTeléfono: ${phone || 'No proporcionado'}`);
-            // Limpiar carrito y formulario
             cart = [];
             updateCart();
             document.getElementById('cart-dropdown').classList.add('hidden');
@@ -329,14 +328,6 @@
             document.getElementById('city').value = '';
             document.getElementById('postal-code').value = '';
             document.getElementById('phone').value = '';
-        } else {
-            console.error('Error al enviar el pedido:', result.message);
-            alert('Error al procesar el pedido. Por favor, intenta de nuevo.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error al conectar con el servidor. Por favor, intenta de nuevo.');
-    }
 });
     </script>
 </body>
